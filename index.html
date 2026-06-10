@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elith Agency — Plataforma de Trabajo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --bg2: #111118;
+  --bg3: #1a1a24;
+  --surface: #1e1e2e;
+  --border: #2a2a3d;
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --gold-dim: rgba(201,168,76,0.12);
+  --text: #f0eee8;
+  --text-muted: #8b8a9a;
+  --green: #4caf7d;
+  --red: #e05555;
+  --blue: #5b8de8;
+  --radius: 12px;
+  --shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+h1,h2,h3,h4{font-family:'Syne',sans-serif}
+
+/* ── UTILS ── */
+.hidden{display:none!important}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:8px;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;transition:all .2s;text-decoration:none}
+.btn-gold{background:var(--gold);color:#0a0a0f}
+.btn-gold:hover{background:var(--gold-light);transform:translateY(-1px)}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.btn-ghost{background:transparent;color:var(--text-muted);border:none}
+.btn-ghost:hover{color:var(--text)}
+.btn-sm{padding:7px 14px;font-size:13px}
+.btn-danger{background:#2d1414;color:var(--red);border:1.5px solid #4a1f1f}
+.btn-danger:hover{background:#3d1a1a}
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.badge-green{background:rgba(76,175,125,0.15);color:var(--green)}
+.badge-gold{background:var(--gold-dim);color:var(--gold)}
+.badge-red{background:rgba(224,85,85,0.15);color:var(--red)}
+.badge-blue{background:rgba(91,141,232,0.15);color:var(--blue)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+input,select,textarea{width:100%;background:var(--bg2);border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+select option{background:var(--bg2)}
+label{display:block;font-size:13px;font-weight:500;color:var(--text-muted);margin-bottom:6px}
+.form-group{margin-bottom:16px}
+.toast{position:fixed;top:24px;right:24px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 20px;z-index:9999;font-size:14px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow);transform:translateX(120%);transition:transform .3s}
+.toast.show{transform:translateX(0)}
+.toast.success{border-left:3px solid var(--green)}
+.toast.error{border-left:3px solid var(--red)}
+.toast.info{border-left:3px solid var(--gold)}
+.loader{display:flex;align-items:center;justify-content:center;padding:40px;color:var(--text-muted)}
+.spinner{width:22px;height:22px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;margin-right:10px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.divider{height:1px;background:var(--border);margin:20px 0}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto;backdrop-filter:blur(4px)}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:680px;box-shadow:0 24px 64px rgba(0,0,0,0.6);animation:slideUp .25s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.modal-header{padding:24px 28px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-body{padding:24px 28px}
+.modal-footer{padding:16px 28px 24px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.grid2{grid-template-columns:1fr}}
+
+/* ── LANDING ── */
+#view-landing{display:flex;flex-direction:column;min-height:100vh}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 48px;border-bottom:1px solid var(--border)}
+.logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;letter-spacing:.03em;color:var(--text)}
+.logo span{color:var(--gold)}
+.nav-actions{display:flex;gap:10px;align-items:center}
+.hero{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:80px 24px;background:radial-gradient(ellipse 60% 40% at 50% 40%,rgba(201,168,76,0.06) 0%,transparent 70%)}
+.hero-eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:20px}
+.hero h1{font-size:clamp(42px,7vw,80px);font-weight:800;line-height:1.05;margin-bottom:20px;max-width:800px}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero p{font-size:17px;color:var(--text-muted);max-width:520px;margin-bottom:36px}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.jobs-section{padding:64px 48px;max-width:1100px;margin:0 auto;width:100%}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+.section-header h2{font-size:24px;font-weight:700}
+.jobs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.job-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:border-color .2s,transform .2s}
+.job-card:hover{border-color:var(--gold);transform:translateY(-2px)}
+.job-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.job-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}
+.job-sector{font-size:12px;color:var(--text-muted)}
+.job-desc{font-size:13px;color:var(--text-muted);line-height:1.5;margin-bottom:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.job-meta{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ── AUTH VIEWS ── */
+.auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(ellipse 40% 50% at 50% 50%,rgba(201,168,76,0.05),transparent 70%)}
+.auth-box{width:100%;max-width:420px;background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:36px;box-shadow:var(--shadow)}
+.auth-box .logo{font-size:22px;text-align:center;margin-bottom:6px;display:block}
+.auth-box .auth-sub{text-align:center;font-size:14px;color:var(--text-muted);margin-bottom:28px}
+.auth-tabs{display:flex;background:var(--bg3);border-radius:8px;padding:3px;margin-bottom:24px}
+.auth-tab{flex:1;text-align:center;padding:8px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text-muted);transition:all .2s}
+.auth-tab.active{background:var(--surface);color:var(--text)}
+
+/* ── DASHBOARD ── */
+#view-dashboard{min-height:100vh;display:flex;flex-direction:column}
+.dash-nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
+.dash-user{display:flex;align-items:center;gap:10px;font-size:14px}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--gold-dim);border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--gold)}
+.dash-content{display:flex;flex:1}
+.sidebar{width:220px;background:var(--bg2);border-right:1px solid var(--border);padding:24px 16px;flex-shrink:0}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:500;color:var(--text-muted);transition:all .2s;margin-bottom:4px;border:none;background:none;width:100%;text-align:left}
+.sidebar-item:hover{background:var(--bg3);color:var(--text)}
+.sidebar-item.active{background:var(--gold-dim);color:var(--gold)}
+.sidebar-item svg{flex-shrink:0;opacity:.7}
+.sidebar-item.active svg{opacity:1}
+.main-area{flex:1;padding:32px;overflow-y:auto}
+.main-area h2{font-size:22px;font-weight:700;margin-bottom:6px}
+.main-area .page-desc{font-size:14px;color:var(--text-muted);margin-bottom:24px}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-bottom:28px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+.stat-card .val{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--gold);line-height:1}
+.stat-card .lbl{font-size:12px;color:var(--text-muted);margin-top:4px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{padding:10px 14px;text-align:left;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);border-bottom:1px solid var(--border)}
+td{padding:12px 14px;border-bottom:1px solid var(--border)}
+tr:hover td{background:rgba(255,255,255,.02)}
+.table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.table-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.table-header h3{font-size:16px;font-weight:600}
+
+/* ── CANVAS FIRMA ── */
+.firma-wrap{background:var(--bg3);border:1.5px dashed var(--border);border-radius:8px;position:relative;overflow:hidden}
+.firma-wrap canvas{display:block;cursor:crosshair;touch-action:none}
+.firma-actions{display:flex;gap:8px;margin-top:8px}
+.firma-preview{max-width:200px;border:1px solid var(--border);border-radius:6px;margin-top:8px}
+.firma-preview img{width:100%;border-radius:6px}
+
+/* ── POSTULACION ── */
+.steps-bar{display:flex;align-items:center;gap:4px;margin-bottom:28px}
+.step-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)}
+.step-dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.step-item.done .step-dot{background:var(--green);border-color:var(--green);color:#fff}
+.step-item.active .step-dot{background:var(--gold);border-color:var(--gold);color:#0a0a0f}
+.step-line{flex:1;height:1.5px;background:var(--border)}
+.step-line.done{background:var(--green)}
+.tc-box{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:16px;font-size:13px;color:var(--text-muted);max-height:200px;overflow-y:auto;line-height:1.7;margin-bottom:14px}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ TOAST ══════════════ -->
+<div class="toast" id="toast">
+  <span id="toast-icon">✓</span>
+  <span id="toast-msg"></span>
+</div>
+
+<!-- ══════════════ LANDING ══════════════ -->
+<div id="view-landing">
+  <nav class="nav">
+    <span class="logo">Elith<span>Agency</span></span>
+    <div class="nav-actions">
+      <button class="btn btn-ghost" onclick="showView('login')">Iniciar sesión</button>
+      <button class="btn btn-gold" onclick="showView('register')">Crear cuenta</button>
+    </div>
+  </nav>
+  <section class="hero">
+    <div class="hero-eyebrow">Oportunidades de trabajo · Colombia</div>
+    <h1>Tu próxima<br><em>oportunidad</em><br>está aquí</h1>
+    <p>Conéctate con trabajos reales. Postúlate, firma y empieza a trabajar desde un solo lugar.</p>
+    <div class="hero-cta">
+      <button class="btn btn-gold" onclick="showView('register')">Crear cuenta gratis</button>
+      <button class="btn btn-outline" onclick="scrollToJobs()">Ver trabajos disponibles</button>
+    </div>
+  </section>
+  <section class="jobs-section" id="public-jobs-section">
+    <div class="section-header">
+      <h2>Trabajos disponibles</h2>
+    </div>
+    <div class="jobs-grid" id="public-jobs-grid">
+      <div class="loader"><div class="spinner"></div> Cargando trabajos...</div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════ LOGIN ══════════════ -->
+<div id="view-login" class="hidden">
+  <div class="auth-wrap">
+    <div class="auth-box">
+      <a class="logo" style="cursor:pointer" onclick="showView('landing')">Elith<span style="color:var(--gold)">Agency</span></a>
+      <p class="auth-sub">Accede a tu cuenta</p>
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <input type="email" id="login-email" placeholder="tu@correo.com">
+      </div>
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:4px" id="login-btn" onclick="doLogin()">Ingresar</button>
+      <div class="divider"></div>
+      <p style="text-align:center;font-size:13px;color:var(--text-muted)">¿No tienes cuenta? <a href="#" onclick="showView('register')" style="color:var(--gold)">Regístrate</a></p>
+      <p style="text-align:center;font-size:13px;color:var(--text-muted);margin-top:8px"><a href="#" onclick="showView('landing')" style="color:var(--text-muted)">← Volver al inicio</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ REGISTER ══════════════ -->
+<div id="view-register" class="hidden">
+  <div class="auth-wrap">
+    <div class="auth-box">
+      <a class="logo" style="cursor:pointer" onclick="showView('landing')">Elith<span style="color:var(--gold)">Agency</span></a>
+      <p class="auth-sub">Crea tu cuenta — es gratis</p>
+      <div class="grid2">
+        <div class="form-group"><label>Nombre completo</label><input type="text" id="reg-nombre" placeholder="Juan Pérez"></div>
+        <div class="form-group"><label>Cédula</label><input type="text" id="reg-cedula" placeholder="1000000000"></div>
+      </div>
+      <div class="form-group"><label>Correo electrónico</label><input type="email" id="reg-email" placeholder="tu@correo.com"></div>
+      <div class="form-group"><label>Contraseña</label><input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres"></div>
+      <div class="form-group">
+        <label>Sector de trabajo</label>
+        <select id="reg-sector">
+          <option value="">— Selecciona —</option>
+          <option>Logística y Eventos</option>
+          <option>Marketing y Publicidad</option>
+          <option>Tecnología y Digital</option>
+          <option>Diseño y Creatividad</option>
+          <option>Administración</option>
+          <option>Ventas y Comercial</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:4px" id="reg-btn" onclick="doRegister()">Crear cuenta</button>
+      <div class="divider"></div>
+      <p style="text-align:center;font-size:13px;color:var(--text-muted)">¿Ya tienes cuenta? <a href="#" onclick="showView('login')" style="color:var(--gold)">Inicia sesión</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ DASHBOARD ══════════════ -->
+<div id="view-dashboard" class="hidden">
+  <nav class="dash-nav">
+    <span class="logo" style="font-size:18px">Elith<span style="color:var(--gold)">Agency</span></span>
+    <div class="dash-user">
+      <div class="avatar" id="user-avatar">?</div>
+      <span id="user-name-display">Usuario</span>
+      <button class="btn btn-ghost btn-sm" onclick="doLogout()" style="margin-left:8px">Salir</button>
+    </div>
+  </nav>
+  <div class="dash-content">
+    <div class="sidebar" id="sidebar">
+      <!-- generado dinámicamente -->
+    </div>
+    <div class="main-area" id="main-area">
+      <div class="loader"><div class="spinner"></div> Cargando...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ MODALES ══════════════ -->
+<!-- Modal ver trabajo -->
+<div class="modal-overlay hidden" id="modal-job">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="mj-title">Nombre del trabajo</h3>
+      <button class="btn btn-ghost btn-sm" onclick="closeModal('modal-job')">✕</button>
+    </div>
+    <div class="modal-body" id="mj-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-job')">Cerrar</button>
+      <button class="btn btn-gold" id="mj-apply-btn" onclick="openPostulacion()">Postularme</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal postulación (multi-paso) -->
+<div class="modal-overlay hidden" id="modal-apply">
+  <div class="modal" style="max-width:600px">
+    <div class="modal-header">
+      <h3>Proceso de postulación</h3>
+      <button class="btn btn-ghost btn-sm" onclick="closeModal('modal-apply')">✕</button>
+    </div>
+    <div class="modal-body" id="apply-body"></div>
+    <div class="modal-footer" id="apply-footer"></div>
+  </div>
+</div>
+
+<!-- Modal crear trabajo (admin) -->
+<div class="modal-overlay hidden" id="modal-create-job">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="cj-modal-title">Crear nueva postulación</h3>
+      <button class="btn btn-ghost btn-sm" onclick="closeModal('modal-create-job')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="grid2">
+        <div class="form-group"><label>Título del trabajo</label><input type="text" id="cj-titulo" placeholder="Ej: Coordinador de Evento BTL"></div>
+        <div class="form-group"><label>Sector</label>
+          <select id="cj-sector">
+            <option>Logística y Eventos</option>
+            <option>Marketing y Publicidad</option>
+            <option>Tecnología y Digital</option>
+            <option>Diseño y Creatividad</option>
+            <option>Administración</option>
+            <option>Ventas y Comercial</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="form-group"><label>Ubicación</label><input type="text" id="cj-ubicacion" placeholder="Bogotá, Colombia"></div>
+        <div class="form-group"><label>Pago / Honorarios</label><input type="text" id="cj-pago" placeholder="Ej: $200.000 por día"></div>
+      </div>
+      <div class="grid2">
+        <div class="form-group"><label>Fecha inicio</label><input type="date" id="cj-fecha-inicio"></div>
+        <div class="form-group"><label>Fecha fin</label><input type="date" id="cj-fecha-fin"></div>
+      </div>
+      <div class="form-group"><label>Descripción del trabajo</label><textarea id="cj-descripcion" rows="3" placeholder="Describe las actividades a realizar..."></textarea></div>
+      <div class="form-group"><label>Requisitos</label><textarea id="cj-requisitos" rows="2" placeholder="Experiencia, habilidades, documentos..."></textarea></div>
+      <div class="form-group"><label>Actividades específicas / Formato de trabajo</label><textarea id="cj-formato" rows="3" placeholder="Lista detallada de actividades, cronograma, entregables..."></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-create-job')">Cancelar</button>
+      <button class="btn btn-gold" id="cj-save-btn" onclick="saveJob()">Publicar trabajo</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal ver contrato / candidato (admin) -->
+<div class="modal-overlay hidden" id="modal-contract">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Detalle de postulación</h3>
+      <button class="btn btn-ghost btn-sm" onclick="closeModal('modal-contract')">✕</button>
+    </div>
+    <div class="modal-body" id="contract-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-contract')">Cerrar</button>
+      <button class="btn btn-gold" id="contract-pdf-btn" onclick="downloadContractPDF()">⬇ Descargar Contrato PDF</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════
+// CONFIG — reemplaza con tu Web App URL
+// ════════════════════════════════════════════
+const API_URL = 'https://script.google.com/macros/s/AKfycbwgg5u0AgSlDac4XbqX_BByk981ROc18mkeEN-vNPbRGiN3M1yIiw-LOHwtdPWTfHXO/exec';
+
+// ════════════════════════════════════════════
+// ESTADO
+// ════════════════════════════════════════════
+let currentUser = null;
+let currentJobId = null;
+let applyStep = 1;
+let signatureData = null;
+let allJobs = [];
+let editJobId = null;
+let contractData = null;
+
+// ════════════════════════════════════════════
+// API
+// ════════════════════════════════════════════
+async function api(action, payload={}) {
+  try {
+    const res = await fetch(API_URL, {
+      method:'POST',
+      body: JSON.stringify({action, ...payload})
+    });
+    return await res.json();
+  } catch(e) {
+    return {success:false, error:'Error de conexión con el servidor'};
+  }
+}
+
+// ════════════════════════════════════════════
+// VISTAS
+// ════════════════════════════════════════════
+function showView(v) {
+  document.querySelectorAll('[id^="view-"]').forEach(el=>el.classList.add('hidden'));
+  document.getElementById('view-'+v).classList.remove('hidden');
+  if(v==='landing') loadPublicJobs();
+  if(v==='dashboard') initDashboard();
+}
+
+function scrollToJobs() {
+  document.getElementById('public-jobs-section').scrollIntoView({behavior:'smooth'});
+}
+
+// ════════════════════════════════════════════
+// TOAST
+// ════════════════════════════════════════════
+function toast(msg, type='info') {
+  const t = document.getElementById('toast');
+  const icons = {success:'✓', error:'✕', info:'ℹ'};
+  document.getElementById('toast-icon').textContent = icons[type]||'ℹ';
+  document.getElementById('toast-msg').textContent = msg;
+  t.className = `toast ${type} show`;
+  setTimeout(()=>t.classList.remove('show'), 3500);
+}
+
+// ════════════════════════════════════════════
+// MODAL
+// ════════════════════════════════════════════
+function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+// ════════════════════════════════════════════
+// AUTH
+// ════════════════════════════════════════════
+async function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-pass').value;
+  if(!email||!pass) { toast('Completa todos los campos','error'); return; }
+  const btn = document.getElementById('login-btn');
+  btn.textContent='Verificando...'; btn.disabled=true;
+  const r = await api('login',{email,password:pass});
+  btn.textContent='Ingresar'; btn.disabled=false;
+  if(r.success) {
+    currentUser = r.user;
+    toast('Bienvenido, '+r.user.nombre,'success');
+    showView('dashboard');
+  } else {
+    toast(r.error||'Credenciales incorrectas','error');
+  }
+}
+
+async function doRegister() {
+  const nombre = document.getElementById('reg-nombre').value.trim();
+  const cedula = document.getElementById('reg-cedula').value.trim();
+  const email  = document.getElementById('reg-email').value.trim();
+  const pass   = document.getElementById('reg-pass').value;
+  const sector = document.getElementById('reg-sector').value;
+  if(!nombre||!cedula||!email||!pass||!sector) { toast('Completa todos los campos','error'); return; }
+  const btn = document.getElementById('reg-btn');
+  btn.textContent='Creando cuenta...'; btn.disabled=true;
+  const r = await api('register',{nombre,cedula,email,password:pass,sector});
+  btn.textContent='Crear cuenta'; btn.disabled=false;
+  if(r.success) {
+    currentUser = r.user;
+    toast('Cuenta creada exitosamente','success');
+    showView('dashboard');
+  } else {
+    toast(r.error||'Error al crear cuenta','error');
+  }
+}
+
+function doLogout() {
+  currentUser = null;
+  showView('landing');
+}
+
+// ════════════════════════════════════════════
+// DASHBOARD INIT
+// ════════════════════════════════════════════
+function initDashboard() {
+  if(!currentUser) { showView('login'); return; }
+  const av = document.getElementById('user-avatar');
+  av.textContent = currentUser.nombre.charAt(0).toUpperCase();
+  document.getElementById('user-name-display').textContent = currentUser.nombre;
+  buildSidebar();
+  loadPage('inicio');
+}
+
+function buildSidebar() {
+  const isAdmin = currentUser.isAdmin;
+  const items = isAdmin ? [
+    {id:'inicio',icon:'⊞',label:'Inicio'},
+    {id:'trabajos',icon:'📋',label:'Gestionar Trabajos'},
+    {id:'postulaciones',icon:'👥',label:'Postulaciones'},
+    {id:'contratos',icon:'📄',label:'Contratos'},
+    {id:'usuarios',icon:'🧑‍💼',label:'Usuarios'},
+  ] : [
+    {id:'inicio',icon:'⊞',label:'Inicio'},
+    {id:'mis-postulaciones',icon:'📋',label:'Mis postulaciones'},
+    {id:'trabajos-disponibles',icon:'🔍',label:'Trabajos disponibles'},
+    {id:'mi-perfil',icon:'👤',label:'Mi perfil'},
+  ];
+  const sb = document.getElementById('sidebar');
+  sb.innerHTML = items.map(i=>`
+    <button class="sidebar-item" id="sbi-${i.id}" onclick="loadPage('${i.id}')">
+      <span>${i.icon}</span><span>${i.label}</span>
+    </button>
+  `).join('');
+}
+
+function setActiveSidebar(id) {
+  document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.remove('active'));
+  const el = document.getElementById('sbi-'+id);
+  if(el) el.classList.add('active');
+}
+
+// ════════════════════════════════════════════
+// PÁGINAS
+// ════════════════════════════════════════════
+async function loadPage(page) {
+  setActiveSidebar(page);
+  const ma = document.getElementById('main-area');
+  const isAdmin = currentUser.isAdmin;
+
+  if(page==='inicio') {
+    if(isAdmin) await renderAdminHome(ma);
+    else await renderUserHome(ma);
+  } else if(page==='trabajos') {
+    await renderAdminJobs(ma);
+  } else if(page==='postulaciones') {
+    await renderAdminPostulaciones(ma);
+  } else if(page==='contratos') {
+    await renderAdminContratos(ma);
+  } else if(page==='usuarios') {
+    await renderAdminUsuarios(ma);
+  } else if(page==='mis-postulaciones') {
+    await renderMisPostulaciones(ma);
+  } else if(page==='trabajos-disponibles') {
+    await renderTrabajosDisponibles(ma);
+  } else if(page==='mi-perfil') {
+    renderPerfil(ma);
+  }
+}
+
+// ─── ADMIN HOME ───
+async function renderAdminHome(ma) {
+  ma.innerHTML = `<h2>Panel de administración</h2><p class="page-desc">Resumen general de Elith Agency</p><div class="loader"><div class="spinner"></div> Cargando estadísticas...</div>`;
+  const r = await api('getStats');
+  if(!r.success) { ma.innerHTML += '<p style="color:var(--red)">Error al cargar estadísticas</p>'; return; }
+  const s = r.stats;
+  ma.innerHTML = `
+    <h2>Panel de administración</h2>
+    <p class="page-desc">Bienvenido, <strong>${currentUser.nombre}</strong> — ${new Date().toLocaleDateString('es-CO',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}</p>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="val">${s.totalJobs||0}</div><div class="lbl">Trabajos activos</div></div>
+      <div class="stat-card"><div class="val">${s.totalPostulaciones||0}</div><div class="lbl">Postulaciones totales</div></div>
+      <div class="stat-card"><div class="val">${s.contratosActivos||0}</div><div class="lbl">Contratos firmados</div></div>
+      <div class="stat-card"><div class="val">${s.totalUsuarios||0}</div><div class="lbl">Usuarios registrados</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px">
+      <div class="card" style="cursor:pointer" onclick="loadPage('trabajos')">
+        <div style="font-weight:600;margin-bottom:4px">📋 Gestionar trabajos</div>
+        <div style="font-size:13px;color:var(--text-muted)">Crear, editar y publicar nuevas postulaciones de trabajo</div>
+      </div>
+      <div class="card" style="cursor:pointer" onclick="loadPage('postulaciones')">
+        <div style="font-weight:600;margin-bottom:4px">👥 Ver postulaciones</div>
+        <div style="font-size:13px;color:var(--text-muted)">Revisa quién se ha postulado a cada trabajo</div>
+      </div>
+      <div class="card" style="cursor:pointer" onclick="loadPage('contratos')">
+        <div style="font-weight:600;margin-bottom:4px">📄 Contratos activos</div>
+        <div style="font-size:13px;color:var(--text-muted)">Contratos firmados por los postulantes</div>
+      </div>
+      <div class="card" style="cursor:pointer" onclick="loadPage('usuarios')">
+        <div style="font-weight:600;margin-bottom:4px">🧑‍💼 Usuarios registrados</div>
+        <div style="font-size:13px;color:var(--text-muted)">Directorio de personas registradas en la plataforma</div>
+      </div>
+    </div>
+  `;
+}
+
+// ─── USER HOME ───
+async function renderUserHome(ma) {
+  ma.innerHTML = `<div class="loader"><div class="spinner"></div></div>`;
+  const r = await api('getMyApplications', {userId: currentUser.id});
+  const jobs = await api('getJobs');
+  ma.innerHTML = `
+    <h2>Mi dashboard</h2>
+    <p class="page-desc">Bienvenido de nuevo, <strong>${currentUser.nombre}</strong></p>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="val">${r.applications ? r.applications.length : 0}</div><div class="lbl">Mis postulaciones</div></div>
+      <div class="stat-card"><div class="val">${jobs.jobs ? jobs.jobs.length : 0}</div><div class="lbl">Trabajos disponibles</div></div>
+      <div class="stat-card"><div class="val">${r.applications ? r.applications.filter(a=>a.estado==='Firmado').length : 0}</div><div class="lbl">Contratos activos</div></div>
+    </div>
+    <div class="table-wrap" style="margin-top:8px">
+      <div class="table-header"><h3>Trabajos disponibles</h3><button class="btn btn-gold btn-sm" onclick="loadPage('trabajos-disponibles')">Ver todos</button></div>
+      <div id="uh-jobs">${renderJobsList(jobs.jobs ? jobs.jobs.slice(0,4) : [])}</div>
+    </div>
+  `;
+}
+
+// ─── ADMIN JOBS ───
+async function renderAdminJobs(ma) {
+  ma.innerHTML = `<h2>Gestionar trabajos</h2><p class="page-desc">Crea y administra las postulaciones de trabajo</p><div class="loader"><div class="spinner"></div></div>`;
+  const r = await api('getJobs');
+  allJobs = r.jobs || [];
+  ma.innerHTML = `
+    <h2>Gestionar trabajos</h2>
+    <p class="page-desc">Crea y administra las postulaciones de trabajo</p>
+    <div style="display:flex;justify-content:flex-end;margin-bottom:16px">
+      <button class="btn btn-gold" onclick="openCreateJob()">+ Crear nuevo trabajo</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Título</th><th>Sector</th><th>Ubicación</th><th>Pago</th><th>Estado</th><th>Acciones</th></tr></thead>
+        <tbody>${allJobs.map(j=>`
+          <tr>
+            <td><strong>${j.titulo}</strong></td>
+            <td>${j.sector}</td>
+            <td>${j.ubicacion||'—'}</td>
+            <td>${j.pago||'—'}</td>
+            <td><span class="badge badge-green">Activo</span></td>
+            <td>
+              <button class="btn btn-outline btn-sm" onclick="openEditJob('${j.id}')">Editar</button>
+              <button class="btn btn-danger btn-sm" style="margin-left:4px" onclick="deleteJob('${j.id}')">Eliminar</button>
+            </td>
+          </tr>
+        `).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--text-muted)">No hay trabajos creados aún</td></tr>'}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// ─── ADMIN POSTULACIONES ───
+async function renderAdminPostulaciones(ma) {
+  ma.innerHTML = `<h2>Postulaciones</h2><p class="page-desc">Personas que se han postulado a los trabajos</p><div class="loader"><div class="spinner"></div></div>`;
+  const r = await api('getAllApplications');
+  const apps = r.applications || [];
+  ma.innerHTML = `
+    <h2>Postulaciones</h2>
+    <p class="page-desc">Personas que se han postulado a los trabajos</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Nombre</th><th>Cédula</th><th>Trabajo</th><th>Sector</th><th>Fecha</th><th>Estado</th><th>Acción</th></tr></thead>
+        <tbody>${apps.map(a=>`
+          <tr>
+            <td><strong>${a.nombre}</strong></td>
+            <td>${a.cedula}</td>
+            <td>${a.trabajo}</td>
+            <td>${a.sector||'—'}</td>
+            <td>${a.fecha||'—'}</td>
+            <td><span class="badge ${a.estado==='Firmado'?'badge-green':a.estado==='Pendiente'?'badge-gold':'badge-blue'}">${a.estado||'Pendiente'}</span></td>
+            <td><button class="btn btn-outline btn-sm" onclick="viewContract(${JSON.stringify(a).replace(/"/g,'&quot;')})">Ver</button></td>
+          </tr>
+        `).join('')||'<tr><td colspan="7" style="text-align:center;color:var(--text-muted)">Sin postulaciones aún</td></tr>'}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// ─── ADMIN CONTRATOS ───
+async function renderAdminContratos(ma) {
+  ma.innerHTML = `<h2>Contratos activos</h2><p class="page-desc">Contratos firmados por los postulantes</p><div class="loader"><div class="spinner"></div></div>`;
+  const r = await api('getAllApplications');
+  const contratos = (r.applications||[]).filter(a=>a.estado==='Firmado');
+  ma.innerHTML = `
+    <h2>Contratos activos</h2>
+    <p class="page-desc">${contratos.length} contrato(s) firmado(s)</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Nombre</th><th>Cédula</th><th>Trabajo</th><th>Fecha firma</th><th>Acciones</th></tr></thead>
+        <tbody>${contratos.map(c=>`
+          <tr>
+            <td><strong>${c.nombre}</strong></td>
+            <td>${c.cedula}</td>
+            <td>${c.trabajo}</td>
+            <td>${c.fecha||'—'}</td>
+            <td><button class="btn btn-gold btn-sm" onclick="viewContract(${JSON.stringify(c).replace(/"/g,'&quot;')})">Ver contrato</button></td>
+          </tr>
+        `).join('')||'<tr><td colspan="5" style="text-align:center;color:var(--text-muted)">Sin contratos firmados aún</td></tr>'}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// ─── ADMIN USUARIOS ───
+async function renderAdminUsuarios(ma) {
+  ma.innerHTML = `<h2>Usuarios registrados</h2><p class="page-desc">Directorio de personas en la plataforma</p><div class="loader"><div class="spinner"></div></div>`;
+  const r = await api('getUsers');
+  const users = r.users || [];
+  ma.innerHTML = `
+    <h2>Usuarios registrados</h2>
+    <p class="page-desc">${users.length} usuario(s) registrado(s)</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Nombre</th><th>Cédula</th><th>Correo</th><th>Sector</th><th>Registro</th></tr></thead>
+        <tbody>${users.map(u=>`
+          <tr>
+            <td><strong>${u.nombre}</strong></td>
+            <td>${u.cedula}</td>
+            <td>${u.email}</td>
+            <td><span class="badge badge-blue">${u.sector||'—'}</span></td>
+            <td>${u.fecha||'—'}</td>
+          </tr>
+        `).join('')||'<tr><td colspan="5" style="text-align:center;color:var(--text-muted)">Sin usuarios registrados</td></tr>'}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// ─── USER: MIS POSTULACIONES ───
+async function renderMisPostulaciones(ma) {
+  ma.innerHTML = `<h2>Mis postulaciones</h2><div class="loader"><div class="spinner"></div></div>`;
+  const r = await api('getMyApplications', {userId: currentUser.id});
+  const apps = r.applications || [];
+  ma.innerHTML = `
+    <h2>Mis postulaciones</h2>
+    <p class="page-desc">${apps.length} postulación(es) realizadas</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Trabajo</th><th>Sector</th><th>Fecha</th><th>Estado</th><th>Contrato</th></tr></thead>
+        <tbody>${apps.map(a=>`
+          <tr>
+            <td><strong>${a.trabajo}</strong></td>
+            <td>${a.sector||'—'}</td>
+            <td>${a.fecha||'—'}</td>
+            <td><span class="badge ${a.estado==='Firmado'?'badge-green':'badge-gold'}">${a.estado||'Pendiente'}</span></td>
+            <td>${a.estado==='Firmado'?`<button class="btn btn-outline btn-sm" onclick="viewContract(${JSON.stringify(a).replace(/"/g,'&quot;')})">Ver PDF</button>`:'—'}</td>
+          </tr>
+        `).join('')||'<tr><td colspan="5" style="text-align:center;color:var(--text-muted)">No tienes postulaciones aún — <a href="#" onclick="loadPage(\'trabajos-disponibles\')" style="color:var(--gold)">explorar trabajos</a></td></tr>'}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// ─── USER: TRABAJOS DISPONIBLES ───
+async function renderTrabajosDisponibles(ma) {
+  ma.innerHTML = `<h2>Trabajos disponibles</h2><div class="loader"><div class="spinner"></div></div>`;
+  const r = await api('getJobs');
+  allJobs = r.jobs || [];
+  ma.innerHTML = `
+    <h2>Trabajos disponibles</h2>
+    <p class="page-desc">${allJobs.length} trabajo(s) activo(s)</p>
+    <div class="jobs-grid">${renderJobsCards(allJobs)}</div>
+  `;
+}
+
+// ─── USER: PERFIL ───
+function renderPerfil(ma) {
+  ma.innerHTML = `
+    <h2>Mi perfil</h2>
+    <p class="page-desc">Tu información registrada en Elith Agency</p>
+    <div class="card" style="max-width:480px">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+        <div class="avatar" style="width:56px;height:56px;font-size:22px">${currentUser.nombre.charAt(0)}</div>
+        <div>
+          <div style="font-size:18px;font-weight:700;font-family:'Syne',sans-serif">${currentUser.nombre}</div>
+          <div style="font-size:13px;color:var(--text-muted)">${currentUser.email}</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div style="display:grid;gap:12px;margin-top:16px">
+        <div><label>Cédula</label><p style="font-size:15px">${currentUser.cedula||'—'}</p></div>
+        <div><label>Sector de trabajo</label><p style="font-size:15px">${currentUser.sector||'—'}</p></div>
+        <div><label>Correo</label><p style="font-size:15px">${currentUser.email}</p></div>
+      </div>
+    </div>
+  `;
+}
+
+// ════════════════════════════════════════════
+// JOBS PUBLIC
+// ════════════════════════════════════════════
+async function loadPublicJobs() {
+  const grid = document.getElementById('public-jobs-grid');
+  if(!grid) return;
+  const r = await api('getJobs');
+  allJobs = r.jobs || [];
+  if(!allJobs.length) { grid.innerHTML = '<p style="color:var(--text-muted);grid-column:1/-1">No hay trabajos disponibles en este momento.</p>'; return; }
+  grid.innerHTML = renderJobsCards(allJobs);
+}
+
+function renderJobsCards(jobs) {
+  if(!jobs||!jobs.length) return '<p style="color:var(--text-muted)">No hay trabajos disponibles.</p>';
+  return jobs.map(j=>`
+    <div class="job-card" onclick="openJobModal('${j.id}')">
+      <div class="job-card-top">
+        <div>
+          <div class="job-title">${j.titulo}</div>
+          <div class="job-sector">${j.sector} · ${j.ubicacion||'Colombia'}</div>
+        </div>
+        <span class="badge badge-green">Activo</span>
+      </div>
+      <div class="job-desc">${j.descripcion||''}</div>
+      <div class="job-meta">
+        <span class="badge badge-gold">💰 ${j.pago||'Por definir'}</span>
+        ${j.fechaInicio?`<span class="badge badge-blue">📅 ${j.fechaInicio}</span>`:''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderJobsList(jobs) {
+  if(!jobs||!jobs.length) return '<p style="padding:16px;color:var(--text-muted)">No hay trabajos disponibles.</p>';
+  return `<table>
+    <thead><tr><th>Título</th><th>Sector</th><th>Pago</th><th></th></tr></thead>
+    <tbody>${jobs.map(j=>`
+      <tr>
+        <td><strong>${j.titulo}</strong></td>
+        <td>${j.sector}</td>
+        <td>${j.pago||'—'}</td>
+        <td><button class="btn btn-gold btn-sm" onclick="openJobModal('${j.id}')">Ver</button></td>
+      </tr>
+    `).join('')}</tbody>
+  </table>`;
+}
+
+// ════════════════════════════════════════════
+// JOB MODAL
+// ════════════════════════════════════════════
+function openJobModal(jobId) {
+  const job = allJobs.find(j=>j.id===jobId||j.id==jobId);
+  if(!job) return;
+  currentJobId = jobId;
+  document.getElementById('mj-title').textContent = job.titulo;
+  document.getElementById('mj-body').innerHTML = `
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+      <span class="badge badge-blue">📍 ${job.ubicacion||'Colombia'}</span>
+      <span class="badge badge-gold">💰 ${job.pago||'Por definir'}</span>
+      ${job.fechaInicio?`<span class="badge badge-green">Inicio: ${job.fechaInicio}</span>`:''}
+      ${job.fechaFin?`<span class="badge badge-blue">Fin: ${job.fechaFin}</span>`:''}
+    </div>
+    <div class="form-group"><label>Descripción</label><p style="font-size:14px;color:var(--text-muted);line-height:1.7">${job.descripcion||'Sin descripción'}</p></div>
+    ${job.requisitos?`<div class="form-group"><label>Requisitos</label><p style="font-size:14px;color:var(--text-muted);line-height:1.7">${job.requisitos}</p></div>`:''}
+    ${job.formato?`<div class="form-group"><label>Actividades / Formato de trabajo</label><p style="font-size:14px;color:var(--text-muted);line-height:1.7">${job.formato}</p></div>`:''}
+    <div class="divider"></div>
+    <div class="tc-box"><strong>Términos y condiciones:</strong><br><br>El trabajo al ser terminado será pago en su totalidad 30 días hábiles después de su finalización a los datos bancarios enviados con antelación. El envío tardío de los datos bancarios puede retrasar el proceso de pago. Acepta términos y condiciones ante la prestación de servicio necesitada temporalmente y no extendida dependiendo la campaña.</div>
+  `;
+  const applyBtn = document.getElementById('mj-apply-btn');
+  if(!currentUser) {
+    applyBtn.textContent = '🔐 Inicia sesión para postularte';
+    applyBtn.onclick = ()=>{ closeModal('modal-job'); showView('login'); };
+  } else {
+    applyBtn.textContent = 'Postularme';
+    applyBtn.onclick = openPostulacion;
+  }
+  openModal('modal-job');
+}
+
+// ════════════════════════════════════════════
+// POSTULACIÓN MULTI-PASO
+// ════════════════════════════════════════════
+function openPostulacion() {
+  closeModal('modal-job');
+  applyStep = 1;
+  signatureData = null;
+  renderApplyStep();
+  openModal('modal-apply');
+}
+
+function renderApplyStep() {
+  const job = allJobs.find(j=>j.id===currentJobId||j.id==currentJobId);
+  const body = document.getElementById('apply-body');
+  const footer = document.getElementById('apply-footer');
+
+  const steps = `
+    <div class="steps-bar">
+      <div class="step-item ${applyStep>=1?'active':''} ${applyStep>1?'done':''}"><div class="step-dot">${applyStep>1?'✓':'1'}</div><span>Información</span></div>
+      <div class="step-line ${applyStep>1?'done':''}"></div>
+      <div class="step-item ${applyStep>=2?'active':''} ${applyStep>2?'done':''}"><div class="step-dot">${applyStep>2?'✓':'2'}</div><span>T&C</span></div>
+      <div class="step-line ${applyStep>2?'done':''}"></div>
+      <div class="step-item ${applyStep>=3?'active':''}"><div class="step-dot">3</div><span>Firma</span></div>
+    </div>
+  `;
+
+  if(applyStep===1) {
+    body.innerHTML = steps + `
+      <h4 style="margin-bottom:4px">Confirmación de datos</h4>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px">Verifica tu información antes de continuar</p>
+      <div class="grid2">
+        <div class="form-group"><label>Nombre completo</label><input type="text" id="ap-nombre" value="${currentUser.nombre}"></div>
+        <div class="form-group"><label>Cédula *</label><input type="text" id="ap-cedula" value="${currentUser.cedula||''}" placeholder="Número de cédula"></div>
+      </div>
+      <div class="form-group"><label>Correo electrónico</label><input type="email" id="ap-email" value="${currentUser.email}"></div>
+      <div class="form-group"><label>Trabajo al que aplica</label><input type="text" value="${job?job.titulo:''}" disabled style="opacity:.6"></div>
+    `;
+    footer.innerHTML = `
+      <button class="btn btn-outline" onclick="closeModal('modal-apply')">Cancelar</button>
+      <button class="btn btn-gold" onclick="applyNext(1)">Continuar →</button>
+    `;
+  } else if(applyStep===2) {
+    body.innerHTML = steps + `
+      <h4 style="margin-bottom:4px">Términos y condiciones</h4>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px">Lee detenidamente antes de firmar</p>
+      <div class="tc-box">
+        <strong>TÉRMINOS Y CONDICIONES — ELITH AGENCY</strong><br><br>
+        <strong>1. Pago:</strong> El trabajo al ser terminado será pago en su totalidad 30 días hábiles después de su finalización a los datos bancarios enviados con antelación. El envío tardío de los datos bancarios puede retrasar el proceso de pago.<br><br>
+        <strong>2. Naturaleza del contrato:</strong> Acepta términos y condiciones ante la prestación de servicio necesitada temporalmente y no extendida dependiendo la campaña.<br><br>
+        <strong>3. Obligaciones del prestador:</strong> El prestador del servicio se compromete a cumplir con las actividades descritas en el formato de trabajo en las fechas y condiciones acordadas.<br><br>
+        <strong>4. Confidencialidad:</strong> El prestador se compromete a mantener confidencialidad sobre la información de los clientes y proyectos de Elith Agency.<br><br>
+        <strong>5. Aceptación:</strong> Al firmar este documento, el prestador declara conocer y aceptar todos los términos aquí descritos.
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:12px">
+        <input type="checkbox" id="tc-check" style="width:auto;cursor:pointer">
+        <label for="tc-check" style="margin:0;cursor:pointer;font-size:13px;color:var(--text)">He leído y acepto los términos y condiciones</label>
+      </div>
+    `;
+    footer.innerHTML = `
+      <button class="btn btn-outline" onclick="applyStep=1;renderApplyStep()">← Atrás</button>
+      <button class="btn btn-gold" onclick="applyNext(2)">Continuar →</button>
+    `;
+  } else if(applyStep===3) {
+    body.innerHTML = steps + `
+      <h4 style="margin-bottom:4px">Firma digital</h4>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px">Dibuja tu firma en el recuadro. Esta firma quedará registrada en tu contrato.</p>
+      <div class="firma-wrap">
+        <canvas id="firma-canvas" width="540" height="160"></canvas>
+      </div>
+      <div class="firma-actions">
+        <button class="btn btn-outline btn-sm" onclick="clearSignature()">Limpiar</button>
+        <span style="font-size:12px;color:var(--text-muted);margin-left:8px">Dibuja tu firma con el mouse o dedo</span>
+      </div>
+      ${signatureData?`<div class="firma-preview" style="margin-top:12px"><p style="font-size:12px;color:var(--text-muted);margin-bottom:4px">Vista previa guardada:</p><img src="${signatureData}"></div>`:''}
+    `;
+    footer.innerHTML = `
+      <button class="btn btn-outline" onclick="applyStep=2;renderApplyStep()">← Atrás</button>
+      <button class="btn btn-gold" id="submit-apply-btn" onclick="submitApplication()">✓ Confirmar y firmar</button>
+    `;
+    initSignatureCanvas();
+  }
+}
+
+function applyNext(step) {
+  if(step===1) {
+    const cedula = document.getElementById('ap-cedula').value.trim();
+    if(!cedula) { toast('La cédula es obligatoria','error'); return; }
+    currentUser.cedula = cedula;
+    currentUser.nombre = document.getElementById('ap-nombre').value.trim();
+    applyStep=2; renderApplyStep();
+  } else if(step===2) {
+    if(!document.getElementById('tc-check').checked) { toast('Debes aceptar los términos y condiciones','error'); return; }
+    applyStep=3; renderApplyStep();
+  }
+}
+
+// ─── FIRMA CANVAS ───
+function initSignatureCanvas() {
+  const canvas = document.getElementById('firma-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  ctx.strokeStyle = '#c9a84c';
+  ctx.lineWidth = 2.5;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  let drawing = false, lastX=0, lastY=0;
+
+  function getPos(e) {
+    const r = canvas.getBoundingClientRect();
+    const src = e.touches?e.touches[0]:e;
+    return [(src.clientX-r.left)*(canvas.width/r.width),(src.clientY-r.top)*(canvas.height/r.height)];
+  }
+  canvas.addEventListener('mousedown', e=>{ drawing=true; [lastX,lastY]=getPos(e); });
+  canvas.addEventListener('mousemove', e=>{ if(!drawing) return; const [x,y]=getPos(e); ctx.beginPath(); ctx.moveTo(lastX,lastY); ctx.lineTo(x,y); ctx.stroke(); [lastX,lastY]=[x,y]; });
+  canvas.addEventListener('mouseup', ()=>{ drawing=false; signatureData=canvas.toDataURL(); });
+  canvas.addEventListener('mouseleave', ()=>drawing=false);
+  canvas.addEventListener('touchstart', e=>{ e.preventDefault(); drawing=true; [lastX,lastY]=getPos(e); });
+  canvas.addEventListener('touchmove', e=>{ e.preventDefault(); if(!drawing) return; const [x,y]=getPos(e); ctx.beginPath(); ctx.moveTo(lastX,lastY); ctx.lineTo(x,y); ctx.stroke(); [lastX,lastY]=[x,y]; });
+  canvas.addEventListener('touchend', ()=>{ drawing=false; signatureData=document.getElementById('firma-canvas').toDataURL(); });
+}
+
+function clearSignature() {
+  const canvas = document.getElementById('firma-canvas');
+  if(!canvas) return;
+  canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
+  signatureData = null;
+}
+
+// ─── SUBMIT POSTULACIÓN ───
+async function submitApplication() {
+  const canvas = document.getElementById('firma-canvas');
+  const firma = canvas ? canvas.toDataURL() : signatureData;
+  if(!firma || firma === 'data:,') { toast('Dibuja tu firma para continuar','error'); return; }
+  signatureData = firma;
+  const job = allJobs.find(j=>j.id===currentJobId||j.id==currentJobId);
+  const btn = document.getElementById('submit-apply-btn');
+  btn.textContent = 'Enviando...'; btn.disabled = true;
+  const r = await api('applyJob', {
+    userId: currentUser.id,
+    nombre: currentUser.nombre,
+    cedula: currentUser.cedula,
+    email: currentUser.email,
+    sector: currentUser.sector,
+    jobId: currentJobId,
+    jobTitulo: job?job.titulo:'',
+    jobSector: job?job.sector:'',
+    jobDescripcion: job?job.descripcion:'',
+    jobFormato: job?job.formato:'',
+    jobPago: job?job.pago:'',
+    jobFechaInicio: job?job.fechaInicio:'',
+    jobFechaFin: job?job.fechaFin:'',
+    firma: signatureData,
+    fecha: new Date().toLocaleString('es-CO')
+  });
+  btn.textContent = '✓ Confirmar y firmar'; btn.disabled = false;
+  if(r.success) {
+    closeModal('modal-apply');
+    toast('¡Postulación enviada y contrato firmado!','success');
+    if(currentUser.isAdmin) loadPage('postulaciones');
+    else loadPage('mis-postulaciones');
+  } else {
+    toast(r.error||'Error al enviar postulación','error');
+  }
+}
+
+// ════════════════════════════════════════════
+// ADMIN: CREAR/EDITAR JOB
+// ════════════════════════════════════════════
+function openCreateJob() {
+  editJobId = null;
+  document.getElementById('cj-modal-title').textContent = 'Crear nueva postulación';
+  ['cj-titulo','cj-ubicacion','cj-pago','cj-descripcion','cj-requisitos','cj-formato'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('cj-fecha-inicio').value='';
+  document.getElementById('cj-fecha-fin').value='';
+  openModal('modal-create-job');
+}
+
+function openEditJob(jobId) {
+  const job = allJobs.find(j=>j.id===jobId||j.id==jobId);
+  if(!job) return;
+  editJobId = jobId;
+  document.getElementById('cj-modal-title').textContent = 'Editar trabajo';
+  document.getElementById('cj-titulo').value = job.titulo||'';
+  document.getElementById('cj-sector').value = job.sector||'Logística y Eventos';
+  document.getElementById('cj-ubicacion').value = job.ubicacion||'';
+  document.getElementById('cj-pago').value = job.pago||'';
+  document.getElementById('cj-descripcion').value = job.descripcion||'';
+  document.getElementById('cj-requisitos').value = job.requisitos||'';
+  document.getElementById('cj-formato').value = job.formato||'';
+  document.getElementById('cj-fecha-inicio').value = job.fechaInicio||'';
+  document.getElementById('cj-fecha-fin').value = job.fechaFin||'';
+  openModal('modal-create-job');
+}
+
+async function saveJob() {
+  const titulo = document.getElementById('cj-titulo').value.trim();
+  if(!titulo) { toast('El título es obligatorio','error'); return; }
+  const btn = document.getElementById('cj-save-btn');
+  btn.textContent = 'Guardando...'; btn.disabled=true;
+  const payload = {
+    titulo, sector: document.getElementById('cj-sector').value,
+    ubicacion: document.getElementById('cj-ubicacion').value,
+    pago: document.getElementById('cj-pago').value,
+    descripcion: document.getElementById('cj-descripcion').value,
+    requisitos: document.getElementById('cj-requisitos').value,
+    formato: document.getElementById('cj-formato').value,
+    fechaInicio: document.getElementById('cj-fecha-inicio').value,
+    fechaFin: document.getElementById('cj-fecha-fin').value,
+  };
+  if(editJobId) payload.jobId = editJobId;
+  const r = await api(editJobId?'editJob':'createJob', payload);
+  btn.textContent = 'Publicar trabajo'; btn.disabled=false;
+  if(r.success) {
+    toast(editJobId?'Trabajo actualizado':'Trabajo publicado','success');
+    closeModal('modal-create-job');
+    loadPage('trabajos');
+  } else { toast(r.error||'Error al guardar','error'); }
+}
+
+async function deleteJob(jobId) {
+  if(!confirm('¿Eliminar este trabajo?')) return;
+  const r = await api('deleteJob',{jobId});
+  if(r.success) { toast('Trabajo eliminado','success'); loadPage('trabajos'); }
+  else toast(r.error||'Error','error');
+}
+
+// ════════════════════════════════════════════
+// VER CONTRATO
+// ════════════════════════════════════════════
+function viewContract(app) {
+  contractData = typeof app === 'string' ? JSON.parse(app) : app;
+  document.getElementById('contract-body').innerHTML = `
+    <div style="display:grid;gap:10px">
+      <div class="grid2">
+        <div><label>Nombre</label><p>${contractData.nombre}</p></div>
+        <div><label>Cédula</label><p>${contractData.cedula}</p></div>
+      </div>
+      <div class="grid2">
+        <div><label>Correo</label><p>${contractData.email||'—'}</p></div>
+        <div><label>Sector</label><p>${contractData.sector||'—'}</p></div>
+      </div>
+      <div class="divider"></div>
+      <div><label>Trabajo</label><p><strong>${contractData.trabajo}</strong></p></div>
+      <div class="grid2">
+        <div><label>Fecha postulación</label><p>${contractData.fecha||'—'}</p></div>
+        <div><label>Estado</label><span class="badge badge-green">${contractData.estado||'Firmado'}</span></div>
+      </div>
+      ${contractData.firma?`<div><label>Firma digital</label><div style="background:var(--bg3);padding:10px;border-radius:8px"><img src="${contractData.firma}" style="max-width:300px;border-radius:4px"></div></div>`:''}
+    </div>
+  `;
+  openModal('modal-contract');
+}
+
+async function downloadContractPDF() {
+  if(!contractData) return;
+  const btn = document.getElementById('contract-pdf-btn');
+  btn.textContent = 'Generando PDF...'; btn.disabled=true;
+  const r = await api('generatePDF',{applicationData: contractData});
+  btn.textContent = '⬇ Descargar Contrato PDF'; btn.disabled=false;
+  if(r.success && r.pdfUrl) {
+    window.open(r.pdfUrl,'_blank');
+  } else {
+    toast(r.error||'Error al generar PDF','error');
+  }
+}
+
+// ════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', ()=>{
+  loadPublicJobs();
+});
+</script>
+</body>
+</html>
