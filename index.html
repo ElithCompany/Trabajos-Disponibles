@@ -332,9 +332,9 @@ tr:hover td{background:rgba(255,255,255,.02)}
 
 <script>
 // ════════════════════════════════════════════
-// CONFIG — reemplaza con tu Web App URL
+// CONFIG — Enlace Directo a tu Web App
 // ════════════════════════════════════════════
-const API_URL = 'TU_APPSCRIPT_WEBAPP_URL_AQUI';
+const API_URL = 'https://script.google.com/macros/s/AKfycbwgg5u0AgSlDac4XbqX_BByk981ROc18mkeEN-vNPbRGiN3M1yIiw-LOHwtdPWTfHXO/exec';
 
 // ════════════════════════════════════════════
 // ESTADO
@@ -970,7 +970,7 @@ async function submitApplication() {
     jobFormato: job?job.formato:'',
     jobPago: job?job.pago:'',
     jobFechaInicio: job?job.fechaInicio:'',
-    jobFechaFin: job?job.fechaFin:'', // Sincronizado correctamente
+    jobFechaFin: job?job.fechaFin:'',
     firma: signatureData,
     fecha: new Date().toLocaleString('es-CO')
   });
