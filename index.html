@@ -150,13 +150,11 @@ tr:hover td{background:rgba(255,255,255,.02)}
 </head>
 <body>
 
-<!-- ══════════════ TOAST ══════════════ -->
 <div class="toast" id="toast">
   <span id="toast-icon">✓</span>
   <span id="toast-msg"></span>
 </div>
 
-<!-- ══════════════ LANDING ══════════════ -->
 <div id="view-landing">
   <nav class="nav">
     <span class="logo">Elith<span>Agency</span></span>
@@ -184,7 +182,6 @@ tr:hover td{background:rgba(255,255,255,.02)}
   </section>
 </div>
 
-<!-- ══════════════ LOGIN ══════════════ -->
 <div id="view-login" class="hidden">
   <div class="auth-wrap">
     <div class="auth-box">
@@ -206,7 +203,6 @@ tr:hover td{background:rgba(255,255,255,.02)}
   </div>
 </div>
 
-<!-- ══════════════ REGISTER ══════════════ -->
 <div id="view-register" class="hidden">
   <div class="auth-wrap">
     <div class="auth-box">
@@ -238,7 +234,6 @@ tr:hover td{background:rgba(255,255,255,.02)}
   </div>
 </div>
 
-<!-- ══════════════ DASHBOARD ══════════════ -->
 <div id="view-dashboard" class="hidden">
   <nav class="dash-nav">
     <span class="logo" style="font-size:18px">Elith<span style="color:var(--gold)">Agency</span></span>
@@ -250,16 +245,13 @@ tr:hover td{background:rgba(255,255,255,.02)}
   </nav>
   <div class="dash-content">
     <div class="sidebar" id="sidebar">
-      <!-- generado dinámicamente -->
-    </div>
+      </div>
     <div class="main-area" id="main-area">
       <div class="loader"><div class="spinner"></div> Cargando...</div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════ MODALES ══════════════ -->
-<!-- Modal ver trabajo -->
 <div class="modal-overlay hidden" id="modal-job">
   <div class="modal">
     <div class="modal-header">
@@ -274,7 +266,6 @@ tr:hover td{background:rgba(255,255,255,.02)}
   </div>
 </div>
 
-<!-- Modal postulación (multi-paso) -->
 <div class="modal-overlay hidden" id="modal-apply">
   <div class="modal" style="max-width:600px">
     <div class="modal-header">
@@ -286,7 +277,6 @@ tr:hover td{background:rgba(255,255,255,.02)}
   </div>
 </div>
 
-<!-- Modal crear trabajo (admin) -->
 <div class="modal-overlay hidden" id="modal-create-job">
   <div class="modal">
     <div class="modal-header">
@@ -326,7 +316,6 @@ tr:hover td{background:rgba(255,255,255,.02)}
   </div>
 </div>
 
-<!-- Modal ver contrato / candidato (admin) -->
 <div class="modal-overlay hidden" id="modal-contract">
   <div class="modal">
     <div class="modal-header">
@@ -345,7 +334,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
 // ════════════════════════════════════════════
 // CONFIG — reemplaza con tu Web App URL
 // ════════════════════════════════════════════
-const API_URL = 'https://script.google.com/macros/s/AKfycbwgg5u0AgSlDac4XbqX_BByk981ROc18mkeEN-vNPbRGiN3M1yIiw-LOHwtdPWTfHXO/exec';
+const API_URL = 'TU_APPSCRIPT_WEBAPP_URL_AQUI';
 
 // ════════════════════════════════════════════
 // ESTADO
@@ -760,6 +749,9 @@ async function loadPublicJobs() {
   grid.innerHTML = renderJobsCards(allJobs);
 }
 
+// ════════════════════════════════════════════
+// RENDERS DE TRABAJOS
+// ════════════════════════════════════════════
 function renderJobsCards(jobs) {
   if(!jobs||!jobs.length) return '<p style="color:var(--text-muted)">No hay trabajos disponibles.</p>';
   return jobs.map(j=>`
@@ -955,7 +947,7 @@ function clearSignature() {
   signatureData = null;
 }
 
-// ─── SUBMIT POSTULACIÓN ───
+// ─── SUBMIT POSTULACIÓN (CONEXIÓN BACKEND) ───
 async function submitApplication() {
   const canvas = document.getElementById('firma-canvas');
   const firma = canvas ? canvas.toDataURL() : signatureData;
@@ -964,6 +956,7 @@ async function submitApplication() {
   const job = allJobs.find(j=>j.id===currentJobId||j.id==currentJobId);
   const btn = document.getElementById('submit-apply-btn');
   btn.textContent = 'Enviando...'; btn.disabled = true;
+  
   const r = await api('applyJob', {
     userId: currentUser.id,
     nombre: currentUser.nombre,
@@ -977,10 +970,11 @@ async function submitApplication() {
     jobFormato: job?job.formato:'',
     jobPago: job?job.pago:'',
     jobFechaInicio: job?job.fechaInicio:'',
-    jobFechaFin: job?job.fechaFin:'',
+    jobFechaFin: job?job.fechaFin:'', // Sincronizado correctamente
     firma: signatureData,
     fecha: new Date().toLocaleString('es-CO')
   });
+  
   btn.textContent = '✓ Confirmar y firmar'; btn.disabled = false;
   if(r.success) {
     closeModal('modal-apply');
