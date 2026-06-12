@@ -8,21 +8,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0a0a0f;
-  --bg2: #111118;
-  --bg3: #1a1a24;
-  --surface: #1e1e2e;
-  --border: #2a2a3d;
-  --gold: #c9a84c;
-  --gold-light: #e8c97a;
-  --gold-dim: rgba(201,168,76,0.12);
-  --text: #f0eee8;
-  --text-muted: #8b8a9a;
-  --green: #4caf7d;
-  --red: #e05555;
-  --blue: #5b8de8;
+  --bg: #f8f9fc;
+  --bg2: #ffffff;
+  --bg3: #f0f2f7;
+  --surface: #ffffff;
+  --border: #e2e6f0;
+  --gold: #1a56db;
+  --gold-light: #2563eb;
+  --gold-dim: rgba(26,86,219,0.10);
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --green: #16a34a;
+  --red: #dc2626;
+  --blue: #1a56db;
+  --sapphire: #1a56db;
   --radius: 12px;
-  --shadow: 0 8px 32px rgba(0,0,0,0.4);
+  --shadow: 0 4px 24px rgba(15,23,42,0.08);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -32,7 +33,7 @@ h1,h2,h3,h4{font-family:'Syne',sans-serif}
 /* ── UTILS ── */
 .hidden{display:none!important}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:8px;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;transition:all .2s;text-decoration:none}
-.btn-gold{background:var(--gold);color:#0a0a0f}
+.btn-gold{background:var(--gold);color:#ffffff}
 .btn-gold:hover{background:var(--gold-light);transform:translateY(-1px)}
 .btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--text)}
 .btn-outline:hover{border-color:var(--gold);color:var(--gold)}
@@ -58,10 +59,10 @@ label{display:block;font-size:13px;font-weight:500;color:var(--text-muted);margi
 .toast.error{border-left:3px solid var(--red)}
 .toast.info{border-left:3px solid var(--gold)}
 .loader{display:flex;align-items:center;justify-content:center;padding:40px;color:var(--text-muted)}
-.spinner{width:22px;height:22px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;margin-right:10px}
+.spinner{width:22px;height:22px;border:2px solid var(--border);border-top-color:var(--sapphire);border-radius:50%;animation:spin .7s linear infinite;margin-right:10px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .divider{height:1px;background:var(--border);margin:20px 0}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto;backdrop-filter:blur(4px)}
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,0.5);z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto;backdrop-filter:blur(4px)}
 .modal{background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:680px;box-shadow:0 24px 64px rgba(0,0,0,0.6);animation:slideUp .25s ease}
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .modal-header{padding:24px 28px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
@@ -76,7 +77,7 @@ label{display:block;font-size:13px;font-weight:500;color:var(--text-muted);margi
 .logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;letter-spacing:.03em;color:var(--text)}
 .logo span{color:var(--gold)}
 .nav-actions{display:flex;gap:10px;align-items:center}
-.hero{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:80px 24px;background:radial-gradient(ellipse 60% 40% at 50% 40%,rgba(201,168,76,0.06) 0%,transparent 70%)}
+.hero{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:80px 24px;background:radial-gradient(ellipse 60% 40% at 50% 40%,rgba(26,86,219,0.04) 0%,transparent 70%)}
 .hero-eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:20px}
 .hero h1{font-size:clamp(42px,7vw,80px);font-weight:800;line-height:1.05;margin-bottom:20px;max-width:800px}
 .hero h1 em{font-style:normal;color:var(--gold)}
@@ -95,7 +96,7 @@ label{display:block;font-size:13px;font-weight:500;color:var(--text-muted);margi
 .job-meta{display:flex;gap:8px;flex-wrap:wrap}
 
 /* ── AUTH VIEWS ── */
-.auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(ellipse 40% 50% at 50% 50%,rgba(201,168,76,0.05),transparent 70%)}
+.auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(ellipse 40% 50% at 50% 50%,rgba(26,86,219,0.04),transparent 70%)}
 .auth-box{width:100%;max-width:420px;background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:36px;box-shadow:var(--shadow)}
 .auth-box .logo{font-size:22px;text-align:center;margin-bottom:6px;display:block}
 .auth-box .auth-sub{text-align:center;font-size:14px;color:var(--text-muted);margin-bottom:28px}
@@ -120,12 +121,12 @@ label{display:block;font-size:13px;font-weight:500;color:var(--text-muted);margi
 .main-area .page-desc{font-size:14px;color:var(--text-muted);margin-bottom:24px}
 .stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-bottom:28px}
 .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
-.stat-card .val{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--gold);line-height:1}
+.stat-card .val{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--sapphire);line-height:1}
 .stat-card .lbl{font-size:12px;color:var(--text-muted);margin-top:4px}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th{padding:10px 14px;text-align:left;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);border-bottom:1px solid var(--border)}
 td{padding:12px 14px;border-bottom:1px solid var(--border)}
-tr:hover td{background:rgba(255,255,255,.02)}
+tr:hover td{background:rgba(26,86,219,0.04)}
 .table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
 .table-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .table-header h3{font-size:16px;font-weight:600}
@@ -198,13 +199,13 @@ tr:hover td{background:rgba(255,255,255,.02)}
 /* ── MODAL EVENTOS ── */
 .modal-event-img{width:100%;max-height:280px;object-fit:cover;border-radius:10px;margin-bottom:16px;background:var(--bg3)}
 .wait-room{text-align:center;padding:32px 16px}
-.wait-room .spinner-big{width:48px;height:48px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+.wait-room .spinner-big{width:48px;height:48px;border:3px solid var(--border);border-top-color:var(--sapphire);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
 .wait-room h3{font-family:'Syne',sans-serif;font-size:20px;margin-bottom:8px}
 .wait-room p{font-size:14px;color:var(--text-muted)}
 .access-granted{text-align:center;padding:24px 16px}
 .access-granted .check{font-size:52px;margin-bottom:12px}
 .access-granted h3{font-family:'Syne',sans-serif;color:var(--green);margin-bottom:8px}
-.code-box{background:var(--bg3);border:1.5px solid var(--gold);border-radius:10px;padding:18px 24px;text-align:center;margin-top:12px}
+.code-box{background:var(--gold-dim);border:1.5px solid var(--gold);border-radius:10px;padding:18px 24px;text-align:center;margin-top:12px}
 .code-box span{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--gold);letter-spacing:.12em}
 
 /* ── POSTULACION ── */
@@ -216,6 +217,31 @@ tr:hover td{background:rgba(255,255,255,.02)}
 .step-line{flex:1;height:1.5px;background:var(--border)}
 .step-line.done{background:var(--green)}
 .tc-box{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:16px;font-size:13px;color:var(--text-muted);max-height:200px;overflow-y:auto;line-height:1.7;margin-bottom:14px}
+
+/* ── PAGE TRANSITIONS & SKELETONS ── */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeIn .3s ease both}
+@keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+.skeleton{background:linear-gradient(90deg,var(--bg3) 25%,var(--border) 50%,var(--bg3) 75%);background-size:800px 100%;animation:shimmer 1.4s infinite;border-radius:6px}
+.page-loader{display:flex;flex-direction:column;gap:16px;padding:24px}
+.page-loader .skel-line{height:14px;border-radius:4px}
+.page-loader .skel-card{height:80px;border-radius:10px}
+/* ── LIGHT THEME FIXES ── */
+select option{background:#fff;color:#0f172a}
+.auth-box{box-shadow:0 4px 24px rgba(15,23,42,0.10)}
+.modal{box-shadow:0 8px 40px rgba(15,23,42,0.14)}
+.toast{box-shadow:0 4px 16px rgba(15,23,42,0.10)}
+.sidebar{box-shadow:1px 0 0 var(--border)}
+.nav{box-shadow:0 1px 0 var(--border)}
+.dash-nav{box-shadow:0 1px 0 var(--border)}
+/* brand pill img filter for light bg */
+.brand-pill img{filter:none;opacity:.85;transition:opacity .2s}
+.brand-pill:hover img{opacity:1}
+/* Input focus ring */
+input:focus,select:focus,textarea:focus{border-color:var(--sapphire);box-shadow:0 0 0 3px rgba(26,86,219,0.12)}
+/* comprobante modal */
+.comprobante-img{width:100%;border-radius:8px;border:1px solid var(--border);max-height:400px;object-fit:contain}
+
 </style>
 </head>
 <body>
@@ -230,7 +256,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
 <div id="view-landing">
   <nav class="nav">
     <span class="logo">Elith<span>Agency</span></span>
-    <div class="nav-actions">
+    <div class="nav-actions" id="nav-actions">
       <button class="btn btn-ghost" onclick="showView('login')">Iniciar sesión</button>
       <button class="btn btn-gold" onclick="showView('register')">Crear cuenta</button>
     </div>
@@ -305,97 +331,149 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <div class="brands-label">Marcas que han trabajado con nosotros</div>
     <div class="brands-track-wrap">
       <div class="brands-track" id="brands-track">
-<div class="brands-track" id="brands-track">
-        <!-- SET 1 -->
         <div class="brand-pill">
-          <img src="https://logo.clearbit.com/ponymalta.com" alt="PONY MALTA" 
-               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'font-size:11px;font-weight:700;color:#D4A017',textContent:'PONY MALTA'}))">
-          <span class="brand-name">PONY MALTA</span>
-        </div>
-        <div class="brand-pill">
-          <img src="https://logo.clearbit.com/postobon.com" alt="POSTOBÓN" 
-               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'font-size:11px;font-weight:700;color:#E63012',textContent:'POSTOBÓN'}))">
+          <img src="https://logo.clearbit.com/postobon.com" 
+               alt="POSTOBÓN"
+               style="height:28px;width:auto;max-width:72px;object-fit:contain;display:block"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:32px;height:32px;border-radius:6px;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:10px;color:#fff;background:#E63012;flex-shrink:0">PB</div>
           <span class="brand-name">POSTOBÓN</span>
         </div>
         <div class="brand-pill">
-          <img src="https://logo.clearbit.com/superricas.com.co" alt="SÚPER RICAS" 
-               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'font-size:11px;font-weight:700;color:#F5A623',textContent:'SÚPER RICAS'}))">
-          <span class="brand-name">SÚPER RICAS</span>
-        </div>
-        <div class="brand-pill">
-          <img src="https://logo.clearbit.com/etb.com.co" alt="ETB" 
-               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'font-size:11px;font-weight:700;color:#005BAC',textContent:'ETB'}))">
+          <img src="https://logo.clearbit.com/etb.com.co" 
+               alt="ETB"
+               style="height:28px;width:auto;max-width:72px;object-fit:contain;display:block"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:32px;height:32px;border-radius:6px;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:10px;color:#fff;background:#005BAC;flex-shrink:0">ETB</div>
           <span class="brand-name">ETB</span>
         </div>
         <div class="brand-pill">
-          <img src="https://logo.clearbit.com/yupi.com.co" alt="YUPI" 
-               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'font-size:11px;font-weight:700;color:#FF6B00',textContent:'YUPI'}))">
-          <span class="brand-name">YUPI</span>
-        </div>
-        <div class="brand-pill">
-          <img src="https://logo.clearbit.com/pullman.com.co" alt="PULLMAN" 
-               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'font-size:11px;font-weight:700;color:#2A6BBE',textContent:'PULLMAN'}))">
-          <span class="brand-name">PULLMAN</span>
-        </div>
-        <div class="brand-pill">
-          <img src="https://logo.clearbit.com/trident.com" alt="TRIDENT" 
-               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'font-size:11px;font-weight:700;color:#00AEEF',textContent:'TRIDENT'}))">
+          <img src="https://logo.clearbit.com/trident.com" 
+               alt="TRIDENT"
+               style="height:28px;width:auto;max-width:72px;object-fit:contain;display:block"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:32px;height:32px;border-radius:6px;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:10px;color:#fff;background:#00AEEF;flex-shrink:0">TR</div>
           <span class="brand-name">TRIDENT</span>
         </div>
         <div class="brand-pill">
-          <img src="https://logo.clearbit.com/ramo.com.co" alt="RAMO" 
-               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'font-size:11px;font-weight:700;color:#C0392B',textContent:'RAMO'}))">
+          <img src="https://logo.clearbit.com/ramo.com.co" 
+               alt="RAMO"
+               style="height:28px;width:auto;max-width:72px;object-fit:contain;display:block"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:32px;height:32px;border-radius:6px;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:10px;color:#fff;background:#C0392B;flex-shrink:0">RA</div>
           <span class="brand-name">RAMO</span>
         </div>
         <div class="brand-pill">
-          <img src="https://logo.clearbit.com/cremhelado.com.co" alt="CREM HELADO" 
-               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'font-size:11px;font-weight:700;color:#E91E8C',textContent:'CREM HELADO'}))">
+          <img src="https://logo.clearbit.com/ponymalta.com" 
+               alt="PONY MALTA"
+               style="height:28px;width:auto;max-width:72px;object-fit:contain;display:block"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:32px;height:32px;border-radius:6px;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:10px;color:#fff;background:#D4A017;flex-shrink:0">PM</div>
+          <span class="brand-name">PONY MALTA</span>
+        </div>
+        <div class="brand-pill">
+          <img src="https://logo.clearbit.com/yupi.com.co" 
+               alt="YUPI"
+               style="height:28px;width:auto;max-width:72px;object-fit:contain;display:block"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:32px;height:32px;border-radius:6px;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:10px;color:#fff;background:#FF6B00;flex-shrink:0">YP</div>
+          <span class="brand-name">YUPI</span>
+        </div>
+        <div class="brand-pill">
+          <img src="https://logo.clearbit.com/pullman.com.co" 
+               alt="PULLMAN"
+               style="height:28px;width:auto;max-width:72px;object-fit:contain;display:block"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:32px;height:32px;border-radius:6px;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:10px;color:#fff;background:#2A6BBE;flex-shrink:0">PL</div>
+          <span class="brand-name">PULLMAN</span>
+        </div>
+        <div class="brand-pill">
+          <img src="https://logo.clearbit.com/superricas.com.co" 
+               alt="SÚPER RICAS"
+               style="height:28px;width:auto;max-width:72px;object-fit:contain;display:block"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:32px;height:32px;border-radius:6px;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:10px;color:#fff;background:#F5A623;flex-shrink:0">SR</div>
+          <span class="brand-name">SÚPER RICAS</span>
+        </div>
+        <div class="brand-pill">
+          <img src="https://logo.clearbit.com/cremhelado.com.co" 
+               alt="CREM HELADO"
+               style="height:28px;width:auto;max-width:72px;object-fit:contain;display:block"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:32px;height:32px;border-radius:6px;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:10px;color:#fff;background:#E91E8C;flex-shrink:0">CH</div>
           <span class="brand-name">CREM HELADO</span>
         </div>
-        <!-- SET 2 (duplicado para loop infinito) -->
+        <!-- duplicado -->
         <div class="brand-pill">
-          <img src="https://logo.clearbit.com/ponymalta.com" alt="PONY MALTA" 
-               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'font-size:11px;font-weight:700;color:#D4A017',textContent:'PONY MALTA'}))">
-          <span class="brand-name">PONY MALTA</span>
-        </div>
-        <div class="brand-pill">
-          <img src="https://logo.clearbit.com/postobon.com" alt="POSTOBÓN" 
-               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'font-size:11px;font-weight:700;color:#E63012',textContent:'POSTOBÓN'}))">
+          <img src="https://logo.clearbit.com/postobon.com" 
+               alt="POSTOBÓN"
+               style="height:28px;width:auto;max-width:72px;object-fit:contain;display:block"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:32px;height:32px;border-radius:6px;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:10px;color:#fff;background:#E63012;flex-shrink:0">PB</div>
           <span class="brand-name">POSTOBÓN</span>
         </div>
         <div class="brand-pill">
-          <img src="https://logo.clearbit.com/superricas.com.co" alt="SÚPER RICAS" 
-               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'font-size:11px;font-weight:700;color:#F5A623',textContent:'SÚPER RICAS'}))">
-          <span class="brand-name">SÚPER RICAS</span>
-        </div>
-        <div class="brand-pill">
-          <img src="https://logo.clearbit.com/etb.com.co" alt="ETB" 
-               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'font-size:11px;font-weight:700;color:#005BAC',textContent:'ETB'}))">
+          <img src="https://logo.clearbit.com/etb.com.co" 
+               alt="ETB"
+               style="height:28px;width:auto;max-width:72px;object-fit:contain;display:block"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:32px;height:32px;border-radius:6px;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:10px;color:#fff;background:#005BAC;flex-shrink:0">ETB</div>
           <span class="brand-name">ETB</span>
         </div>
         <div class="brand-pill">
-          <img src="https://logo.clearbit.com/yupi.com.co" alt="YUPI" 
-               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'font-size:11px;font-weight:700;color:#FF6B00',textContent:'YUPI'}))">
-          <span class="brand-name">YUPI</span>
-        </div>
-        <div class="brand-pill">
-          <img src="https://logo.clearbit.com/pullman.com.co" alt="PULLMAN" 
-               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'font-size:11px;font-weight:700;color:#2A6BBE',textContent:'PULLMAN'}))">
-          <span class="brand-name">PULLMAN</span>
-        </div>
-        <div class="brand-pill">
-          <img src="https://logo.clearbit.com/trident.com" alt="TRIDENT" 
-               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'font-size:11px;font-weight:700;color:#00AEEF',textContent:'TRIDENT'}))">
+          <img src="https://logo.clearbit.com/trident.com" 
+               alt="TRIDENT"
+               style="height:28px;width:auto;max-width:72px;object-fit:contain;display:block"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:32px;height:32px;border-radius:6px;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:10px;color:#fff;background:#00AEEF;flex-shrink:0">TR</div>
           <span class="brand-name">TRIDENT</span>
         </div>
         <div class="brand-pill">
-          <img src="https://logo.clearbit.com/ramo.com.co" alt="RAMO" 
-               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'font-size:11px;font-weight:700;color:#C0392B',textContent:'RAMO'}))">
+          <img src="https://logo.clearbit.com/ramo.com.co" 
+               alt="RAMO"
+               style="height:28px;width:auto;max-width:72px;object-fit:contain;display:block"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:32px;height:32px;border-radius:6px;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:10px;color:#fff;background:#C0392B;flex-shrink:0">RA</div>
           <span class="brand-name">RAMO</span>
         </div>
         <div class="brand-pill">
-          <img src="https://logo.clearbit.com/cremhelado.com.co" alt="CREM HELADO" 
-               onerror="this.replaceWith(Object.assign(document.createElement('span'),{style:'font-size:11px;font-weight:700;color:#E91E8C',textContent:'CREM HELADO'}))">
+          <img src="https://logo.clearbit.com/ponymalta.com" 
+               alt="PONY MALTA"
+               style="height:28px;width:auto;max-width:72px;object-fit:contain;display:block"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:32px;height:32px;border-radius:6px;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:10px;color:#fff;background:#D4A017;flex-shrink:0">PM</div>
+          <span class="brand-name">PONY MALTA</span>
+        </div>
+        <div class="brand-pill">
+          <img src="https://logo.clearbit.com/yupi.com.co" 
+               alt="YUPI"
+               style="height:28px;width:auto;max-width:72px;object-fit:contain;display:block"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:32px;height:32px;border-radius:6px;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:10px;color:#fff;background:#FF6B00;flex-shrink:0">YP</div>
+          <span class="brand-name">YUPI</span>
+        </div>
+        <div class="brand-pill">
+          <img src="https://logo.clearbit.com/pullman.com.co" 
+               alt="PULLMAN"
+               style="height:28px;width:auto;max-width:72px;object-fit:contain;display:block"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:32px;height:32px;border-radius:6px;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:10px;color:#fff;background:#2A6BBE;flex-shrink:0">PL</div>
+          <span class="brand-name">PULLMAN</span>
+        </div>
+        <div class="brand-pill">
+          <img src="https://logo.clearbit.com/superricas.com.co" 
+               alt="SÚPER RICAS"
+               style="height:28px;width:auto;max-width:72px;object-fit:contain;display:block"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:32px;height:32px;border-radius:6px;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:10px;color:#fff;background:#F5A623;flex-shrink:0">SR</div>
+          <span class="brand-name">SÚPER RICAS</span>
+        </div>
+        <div class="brand-pill">
+          <img src="https://logo.clearbit.com/cremhelado.com.co" 
+               alt="CREM HELADO"
+               style="height:28px;width:auto;max-width:72px;object-fit:contain;display:block"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div style="display:none;width:32px;height:32px;border-radius:6px;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:10px;color:#fff;background:#E91E8C;flex-shrink:0">CH</div>
           <span class="brand-name">CREM HELADO</span>
         </div>
       </div>
@@ -780,8 +858,9 @@ async function doLogin() {
   btn.textContent='Ingresar'; btn.disabled=false;
   if(r.success) {
     currentUser = r.user;
+    updateNavForLoggedIn();
+    showView('landing');
     toast('Bienvenido, '+r.user.nombre,'success');
-    showView('dashboard');
   } else {
     toast(r.error||'Credenciales incorrectas','error');
   }
@@ -800,8 +879,9 @@ async function doRegister() {
   btn.textContent='Crear cuenta'; btn.disabled=false;
   if(r.success) {
     currentUser = r.user;
-    toast('Cuenta creada exitosamente','success');
-    showView('dashboard');
+    updateNavForLoggedIn();
+    showView('landing');
+    toast('¡Cuenta creada! Bienvenido, '+r.user.nombre,'success');
   } else {
     toast(r.error||'Error al crear cuenta','error');
   }
@@ -809,7 +889,29 @@ async function doRegister() {
 
 function doLogout() {
   currentUser = null;
+  updateNavForLoggedIn();
   showView('landing');
+}
+
+function updateNavForLoggedIn() {
+  const nav = document.getElementById('nav-actions');
+  if(!nav) return;
+  if(currentUser) {
+    const initials = currentUser.nombre.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+    nav.innerHTML = `
+      <button class="btn btn-ghost" onclick="showView('dashboard')" style="font-size:13px">Mi panel</button>
+      <div style="display:flex;align-items:center;gap:10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:6px 14px">
+        <div style="width:30px;height:30px;border-radius:50%;background:var(--sapphire);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:12px;color:#fff">${initials}</div>
+        <span style="font-size:13px;font-weight:500;color:var(--text);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${currentUser.nombre.split(' ')[0]}</span>
+        <button class="btn btn-ghost btn-sm" onclick="doLogout()" style="padding:4px 8px;font-size:12px;color:var(--text-muted)">Salir</button>
+      </div>
+    `;
+  } else {
+    nav.innerHTML = `
+      <button class="btn btn-ghost" onclick="showView('login')">Iniciar sesión</button>
+      <button class="btn btn-gold" onclick="showView('register')">Crear cuenta</button>
+    `;
+  }
 }
 
 // ════════════════════════════════════════════
@@ -857,9 +959,20 @@ function setActiveSidebar(id) {
 // ════════════════════════════════════════════
 // PÁGINAS
 // ════════════════════════════════════════════
+function skeletonLoader() {
+  return `<div class="page-loader fade-in">
+    <div class="skel-line skeleton" style="width:40%;height:22px;margin-bottom:8px"></div>
+    <div class="skel-line skeleton" style="width:65%;height:14px;margin-bottom:24px"></div>
+    <div class="skel-card skeleton"></div>
+    <div class="skel-card skeleton"></div>
+    <div class="skel-card skeleton" style="height:120px"></div>
+  </div>`;
+}
+
 async function loadPage(page) {
   setActiveSidebar(page);
   const ma = document.getElementById('main-area');
+  ma.innerHTML = skeletonLoader();
   const isAdmin = currentUser.isAdmin;
 
   if(page==='inicio') {
@@ -1137,7 +1250,7 @@ async function loadPublicJobs() {
 function renderJobsCards(jobs) {
   if(!jobs||!jobs.length) return '<p style="color:var(--text-muted)">No hay trabajos disponibles.</p>';
   return jobs.map(j=>`
-    <div class="job-card" onclick="openJobModal('${j.id}')">
+    <div class="job-card fade-in" onclick="openJobModal('${j.id}')">
       <div class="job-card-top">
         <div>
           <div class="job-title">${j.titulo}</div>
@@ -1787,11 +1900,45 @@ async function renderAdminEventos(ma) {
 }
 
 // Modal para ver comprobante (admin)
-const comprobanteCache = {};
-function verComprobante(inscripcionId) {
-  // Busca el comprobante en las inscripciones ya cargadas via getAllRegistrations
-  // Solo muestra si existe - para simplificar, abre un alert con info
-  toast('Función de visualización de comprobante disponible próximamente','info');
+async function verComprobante(inscripcionId) {
+  // Fetch all registrations to find this one's comprobante
+  const r = await api('getAllRegistrations');
+  const reg = (r.registrations||[]).find(x=>x.inscripcionId===inscripcionId);
+  if(!reg || !reg.comprobante) { toast('No hay comprobante adjunto','error'); return; }
+  
+  // Build and show modal
+  let modal = document.getElementById('modal-comprobante-view');
+  if(!modal) {
+    modal = document.createElement('div');
+    modal.id = 'modal-comprobante-view';
+    modal.className = 'modal-overlay hidden';
+    modal.innerHTML = `
+      <div class="modal" style="max-width:600px">
+        <div class="modal-header">
+          <h3>Comprobante de pago</h3>
+          <button class="btn btn-ghost btn-sm" onclick="closeModal('modal-comprobante-view')">✕</button>
+        </div>
+        <div class="modal-body" style="text-align:center">
+          <img id="comprobante-view-img" class="comprobante-img" src="" alt="Comprobante">
+          <p id="comprobante-view-info" style="font-size:12px;color:var(--text-muted);margin-top:10px"></p>
+        </div>
+        <div class="modal-footer" style="justify-content:space-between">
+          <span id="comprobante-view-nombre" style="font-size:13px;color:var(--text-muted)"></span>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-gold btn-sm" id="comp-aprobar-btn">✓ Aprobar pago</button>
+            <button class="btn btn-danger btn-sm" id="comp-rechazar-btn">✕ Rechazar</button>
+          </div>
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+  }
+
+  document.getElementById('comprobante-view-img').src = reg.comprobante.startsWith('data:') ? reg.comprobante : 'data:image/jpeg;base64,' + reg.comprobante;
+  document.getElementById('comprobante-view-info').textContent = `Inscripción: ${inscripcionId} · ${reg.fecha||''}`;
+  document.getElementById('comprobante-view-nombre').textContent = `${reg.nombre} — ${reg.eventoTitulo}`;
+  document.getElementById('comp-aprobar-btn').onclick = async ()=>{ await verifyPay(inscripcionId,true); closeModal('modal-comprobante-view'); };
+  document.getElementById('comp-rechazar-btn').onclick = async ()=>{ await verifyPay(inscripcionId,false); closeModal('modal-comprobante-view'); };
+  openModal('modal-comprobante-view');
 }
 
 async function verifyPay(inscripcionId, aprobado) {
@@ -1849,6 +1996,7 @@ async function saveEvent() {
 document.addEventListener('DOMContentLoaded', ()=>{
   loadPublicJobs();
   loadPublicEvents();
+  updateNavForLoggedIn();
   // Set QR images
   const qrImgs = document.querySelectorAll('#qr-img, #mep-qr');
   qrImgs.forEach(img => { if(img) img.src = 'data:image/jpeg;base64,' + QR_BASE64; });
