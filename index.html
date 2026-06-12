@@ -816,11 +816,30 @@ async function api(action, payload={}) {
 // ════════════════════════════════════════════
 // VISTAS
 // ════════════════════════════════════════════
+let _currentView = 'landing';
+
 function showView(v) {
-  document.querySelectorAll('[id^="view-"]').forEach(el=>el.classList.add('hidden'));
-  document.getElementById('view-'+v).classList.remove('hidden');
-  if(v==='landing') { loadPublicJobs(); loadPublicEvents(); }
-  if(v==='dashboard') initDashboard();
+  // Hide all views cleanly
+  document.querySelectorAll('[id^="view-"]').forEach(el => {
+    el.classList.add('hidden');
+    el.style.display = '';
+  });
+  const target = document.getElementById('view-' + v);
+  if(!target) return;
+  target.classList.remove('hidden');
+  _currentView = v;
+
+  // Scroll to top on view change
+  window.scrollTo({top: 0, behavior: 'smooth'});
+
+  if(v === 'landing') {
+    loadPublicJobs();
+    loadPublicEvents();
+  }
+  if(v === 'dashboard') initDashboard();
+
+  // Close any open modals when switching views
+  document.querySelectorAll('.modal-overlay').forEach(m => m.classList.add('hidden'));
 }
 
 function scrollToJobs() {
@@ -858,6 +877,7 @@ async function doLogin() {
   btn.textContent='Ingresar'; btn.disabled=false;
   if(r.success) {
     currentUser = r.user;
+    localStorage.setItem('elith_session', JSON.stringify(r.user));
     updateNavForLoggedIn();
     showView('landing');
     toast('Bienvenido, '+r.user.nombre,'success');
@@ -879,6 +899,7 @@ async function doRegister() {
   btn.textContent='Crear cuenta'; btn.disabled=false;
   if(r.success) {
     currentUser = r.user;
+    localStorage.setItem('elith_session', JSON.stringify(r.user));
     updateNavForLoggedIn();
     showView('landing');
     toast('¡Cuenta creada! Bienvenido, '+r.user.nombre,'success');
@@ -889,6 +910,7 @@ async function doRegister() {
 
 function doLogout() {
   currentUser = null;
+  localStorage.removeItem('elith_session');
   updateNavForLoggedIn();
   showView('landing');
 }
@@ -973,6 +995,7 @@ async function loadPage(page) {
   setActiveSidebar(page);
   const ma = document.getElementById('main-area');
   ma.innerHTML = skeletonLoader();
+  ma.style.opacity = '0';
   const isAdmin = currentUser.isAdmin;
 
   if(page==='inicio') {
@@ -997,6 +1020,11 @@ async function loadPage(page) {
   } else if(page==='mi-perfil') {
     renderPerfil(ma);
   }
+  // Fade in after content renders
+  requestAnimationFrame(()=>{
+    ma.style.transition = 'opacity .25s ease';
+    ma.style.opacity = '1';
+  });
 }
 
 // ─── ADMIN HOME ───
@@ -1994,6 +2022,13 @@ async function saveEvent() {
 // INIT
 // ════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', ()=>{
+  // Restaurar sesión guardada
+  try {
+    const saved = localStorage.getItem('elith_session');
+    if(saved) {
+      currentUser = JSON.parse(saved);
+    }
+  } catch(e) { localStorage.removeItem('elith_session'); }
   loadPublicJobs();
   loadPublicEvents();
   updateNavForLoggedIn();
